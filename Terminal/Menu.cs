@@ -24,7 +24,7 @@ namespace VariableIrony.Terminal {
 
         private int GetDepth(MenuItem item)
         {
-            return item.Items.Select(i => GetDepth(i)).DefaultIfEmpty().Max() + 1;
+            return item.Items.Select(GetDepth).DefaultIfEmpty().Max() + 1;
         }
 
         public T Choose<T>() {
@@ -34,7 +34,7 @@ namespace VariableIrony.Terminal {
         public MenuItem Choose()
         {
             var sequences = Labels.Take(GetDepth(this)).ToList();
-            var pattern = new Regex("^" + sequences.Select(s => "(" + s.Pattern + ")").Aggregate((x, y) => x + y) + "$");
+            var pattern = new Regex("^" + sequences.Select(s => "(" + s.Pattern + ")").Aggregate((x, y) => x + y) + "$", RegexOptions.IgnoreCase);
             MenuItem result = null;
             do
             {
@@ -42,6 +42,7 @@ namespace VariableIrony.Terminal {
                 Display(Items, 0, sequences);
                 Console.WriteLine();
                 Console.Write(Text);
+                Console.Write(' ');
                 var input = Console.ReadLine();
                 var match = pattern.Match(input);
                 if (match.Success)

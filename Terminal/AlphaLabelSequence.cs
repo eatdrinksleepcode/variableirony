@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,7 +27,7 @@ namespace VariableIrony.Terminal
 
         public override int ParseLabel(string label)
         {
-            return GetLabels().TakeWhile(l => l != label).Count(); // HACK: parse this better
+            return GetLabels().TakeUntil(l => l.Equals(label, StringComparison.InvariantCultureIgnoreCase)).Count(); // HACK: parse this better
         }
     }
 }
