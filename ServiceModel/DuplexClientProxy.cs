@@ -1,9 +1,10 @@
+﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 
 namespace VariableIrony.ServiceModel {
-    public class DuplexClientProxy<TChannel> : DuplexClientBase<TChannel> where TChannel : class {
+    public class DuplexClientProxy<TChannel> : DuplexClientBase<TChannel>, IDisposable where TChannel : class {
         public DuplexClientProxy(InstanceContext callbackInstance) : base(callbackInstance) { }
         public DuplexClientProxy(InstanceContext callbackInstance, string endpointConfigurationName) : base(callbackInstance, endpointConfigurationName) { }
         public DuplexClientProxy(InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : base(callbackInstance, endpointConfigurationName, remoteAddress) { }
@@ -19,6 +20,10 @@ namespace VariableIrony.ServiceModel {
 
         public new TChannel Channel {
             get { return base.Channel; }
+        }
+
+        public void Dispose() {
+            this.SafeDispose();
         }
     }
 }
