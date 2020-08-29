@@ -50,6 +50,20 @@ namespace VariableIrony {
             return new Enumerable<T>(source);
         }
 
+        /// <summary>
+        /// Returns an infinite sequence produced by repeating the source.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of <paramref name="source" />.</typeparam>
+        /// <param name="source">The sequence to repeat.</param>
+        /// <remarks>The <paramref name="source"/> sequence must be able to be iterated repeatedly.</remarks>
+        public static IEnumerable<T> Circular<T>(this IEnumerable<T> source) {
+            while(true) {
+                foreach(var item in source) {
+                    yield return item;
+                }
+            }
+        }
+
         /// <inheritdoc cref="M:System.Linq.Enumerable.First``1(System.Collections.Generic.IEnumerable{``0})" />
         /// <param name="source"><inheritdoc cref="M:System.Linq.Enumerable.First``1(System.Collections.Generic.IEnumerable{``0})" /></param>
         /// <param name="exceptionMessage">The exception message to throw if the sequence is empty.</param>
