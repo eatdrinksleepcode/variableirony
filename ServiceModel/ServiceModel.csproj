@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>VariableIrony.ServiceModel</AssemblyName>
     <RootNamespace>VariableIrony.ServiceModel</RootNamespace>
     <Company>VariableIrony</Company>
@@ -15,6 +15,10 @@
 
   <ItemGroup>
     <Reference Include="System.ServiceModel" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

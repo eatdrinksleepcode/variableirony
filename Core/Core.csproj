@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>VariableIrony.Core</AssemblyName>
     <RootNamespace>VariableIrony</RootNamespace>
     <Company>VariableIrony</Company>
