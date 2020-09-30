@@ -94,7 +94,59 @@ public static class IDictionaryExtensions
     /// <exception cref="ArgumentNullException">
     /// <para><paramref name="source" /> or <paramref name="key" /> is <see langword="null" />.</para>
     /// </exception>
+    public static TValue TryGetValue<TKey, TValue>(this Dictionary<TKey, TValue> source, TKey key, TValue defaultValue)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(Meta.NameOf(() => source));
+        }
+        TValue local;
+        if (source.TryGetValue(key, out local))
+        {
+            return local;
+        }
+        return defaultValue;
+    }
+
+    /// <summary>
+    /// Gets the value associated with the specified key, or a default value if the key is not present.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+    /// <typeparam name="TValue">The types of the values in the dictionary.</typeparam>
+    /// <param name="source">The dictionary to retrieve a value from.</param>
+    /// <param name="key">The key of the value to get.</param>
+    /// <param name="defaultValue">The value to return if the <paramref name="key" /> is not found in the dictionary.</param>
+    /// <returns>The value associated with the specified key, if the key is found; otherwise, the value of <paramref name="defaultValue" />.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <para><paramref name="source" /> or <paramref name="key" /> is <see langword="null" />.</para>
+    /// </exception>
     public static TValue TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue defaultValue)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(Meta.NameOf(() => source));
+        }
+        TValue local;
+        if (source.TryGetValue(key, out local))
+        {
+            return local;
+        }
+        return defaultValue;
+    }
+
+    /// <summary>
+    /// Gets the value associated with the specified key, or a default value if the key is not present.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+    /// <typeparam name="TValue">The types of the values in the dictionary.</typeparam>
+    /// <param name="source">The dictionary to retrieve a value from.</param>
+    /// <param name="key">The key of the value to get.</param>
+    /// <param name="defaultValue">The value to return if the <paramref name="key" /> is not found in the dictionary.</param>
+    /// <returns>The value associated with the specified key, if the key is found; otherwise, the value of <paramref name="defaultValue" />.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <para><paramref name="source" /> or <paramref name="key" /> is <see langword="null" />.</para>
+    /// </exception>
+    public static TValue TryGetValue<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> source, TKey key, TValue defaultValue)
     {
         if (source == null)
         {
