@@ -7,10 +7,7 @@ namespace VariableIrony.Terminal
     {
         public static readonly NumericLabelSequence Instance = new NumericLabelSequence();
 
-        public override string Pattern
-        {
-            get { return @"\d{1,9}"; }
-        }
+        public override string Pattern => @"\d{1,9}";
 
         public override IEnumerable<string> GetLabels()
         {

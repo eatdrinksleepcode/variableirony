@@ -35,7 +35,7 @@ namespace VariableIrony.Terminal {
         {
             var sequences = Labels.Take(GetDepth(this)).ToList();
             var pattern = new Regex("^" + sequences.Select(s => "(" + s.Pattern + ")").Aggregate((x, y) => x + y) + "$", RegexOptions.IgnoreCase);
-            MenuItem result = null;
+            MenuItem result;
             do
             {
                 Console.Clear();
@@ -48,7 +48,7 @@ namespace VariableIrony.Terminal {
                 if (match.Success)
                 {
                     result = this;
-                    int depth = 0;
+                    var depth = 0;
                     while (null != result)
                     {
                         if (result.Items.Count == 0)

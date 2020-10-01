@@ -21,7 +21,7 @@ namespace VariableIrony.ObjectModel
         /// <param name="propertyName">The name of the property that has changed, or an empty string to indicate that the entire object has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            var propertyChanged = this.PropertyChanged;
             if (propertyChanged != null)
             {
                 var e = new PropertyChangedEventArgs(propertyName);
@@ -45,7 +45,7 @@ namespace VariableIrony.ObjectModel
         {
             if (!string.IsNullOrEmpty(propertyName) && (TypeDescriptor.GetProperties(this)[propertyName] == null))
             {
-                throw new ArgumentException("Invalid property name: " + propertyName, "propertyName");
+                throw new ArgumentException("Invalid property name: " + propertyName, nameof(propertyName));
             }
         }
     }

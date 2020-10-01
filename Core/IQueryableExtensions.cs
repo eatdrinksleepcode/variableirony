@@ -40,8 +40,7 @@ namespace VariableIrony
 
         private static IQueryable<T> GetSource<T>(IQueryable<T> outer)
         {
-            var queryable = outer as Queryable<T>;
-            return queryable != null ? queryable.Source : outer;
+            return outer is Queryable<T> queryable ? queryable.Source : outer;
         }
 
         /// <inheritdoc cref="M:VariableIrony.IQueryableExtensions.LeftJoin``4(System.Linq.IQueryable{``0},System.Collections.Generic.IEnumerable{``1},System.Linq.Expressions.Expression{System.Func{``0,``2}},System.Linq.Expressions.Expression{System.Func{``1,``2}},System.Linq.Expressions.Expression{System.Func{``0,``1,``3}})" />
@@ -54,8 +53,8 @@ namespace VariableIrony
         /// </remarks>
         public static IQueryable<TResult> Join<TInner, TOuter, TKey, TResult>(this IQueryable<TInner> inner, IOuterQueryable<TOuter> outer, Expression<Func<TInner, TKey>> innerKeySelector, Expression<Func<TOuter, TKey>> outerKeySelector, Expression<Func<TInner, TOuter, TResult>> resultSelector)
         {
-            ParameterExpression expression = Expression.Parameter(typeof(TInner), "i");
-            ParameterExpression expression2 = Expression.Parameter(typeof(TOuter), "o");
+            var expression = Expression.Parameter(typeof(TInner), "i");
+            var expression2 = Expression.Parameter(typeof(TOuter), "o");
             return GetSource(outer).LeftJoin(inner, outerKeySelector, innerKeySelector, Expression.Lambda<Func<TOuter, TInner, TResult>>(Expression.Invoke(resultSelector, new Expression[] { expression, expression2 }), new[] { expression2, expression }));
         }
 
@@ -95,23 +94,23 @@ namespace VariableIrony
         {
             if (outer == null)
             {
-                throw new ArgumentNullException("outer");
+                throw new ArgumentNullException(nameof(outer));
             }
             if (inner == null)
             {
-                throw new ArgumentNullException("inner");
+                throw new ArgumentNullException(nameof(inner));
             }
             if (outerKeySelector == null)
             {
-                throw new ArgumentNullException("outerKeySelector");
+                throw new ArgumentNullException(nameof(outerKeySelector));
             }
             if (innerKeySelector == null)
             {
-                throw new ArgumentNullException("innerKeySelector");
+                throw new ArgumentNullException(nameof(innerKeySelector));
             }
             if (resultSelector == null)
             {
-                throw new ArgumentNullException("resultSelector");
+                throw new ArgumentNullException(nameof(resultSelector));
             }
             // TODO: this
             var outerExample = new
@@ -119,8 +118,8 @@ namespace VariableIrony
                 o = default(TOuter),
                 i = (IEnumerable<TInner>)null
             };
-            Type type = outerExample.GetType();
-            ParameterExpression expression = Expression.Parameter(type, "a");
+            var type = outerExample.GetType();
+            var expression = Expression.Parameter(type, "a");
             return outer
                 .GroupJoin(inner, outerKeySelector, innerKeySelector, (o, i) => new { o, i })
                 .SelectMany(

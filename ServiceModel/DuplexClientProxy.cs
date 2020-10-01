@@ -11,12 +11,7 @@ namespace VariableIrony.ServiceModel {
         public DuplexClientProxy(InstanceContext callbackInstance, string endpointConfigurationName, EndpointAddress remoteAddress) : base(callbackInstance, endpointConfigurationName, remoteAddress) { }
         public DuplexClientProxy(InstanceContext callbackInstance, Binding binding, EndpointAddress remoteAddress) : base(callbackInstance, binding, remoteAddress) { }
 
-        public new TChannel Channel {
-            get { return base.Channel; }
-        }
-
-        public void Dispose() {
-            this.SafeDispose();
-        }
+        public new TChannel Channel => base.Channel;
+        public void Dispose() => this.SafeDispose();
     }
 }

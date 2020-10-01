@@ -10,7 +10,7 @@ namespace VariableIrony
         {
             if (exp == null)
             {
-                throw new ArgumentNullException(NameOf(() => exp));
+                throw new ArgumentNullException(nameof(exp));
             }
             return MemberOf(exp.Body);
         }
@@ -19,31 +19,29 @@ namespace VariableIrony
         {
             if (exp == null)
             {
-                throw new ArgumentNullException(NameOf(() => exp));
+                throw new ArgumentNullException(nameof(exp));
             }
             return MemberOf(exp.Body);
         }
 
         private static MemberInfo MemberOf(Expression exp)
         {
-            var expression = exp as MemberExpression;
-            if (expression != null)
+            switch (exp)
             {
-                return expression.Member;
+                case MemberExpression expMember:
+                    return expMember.Member;
+                case MethodCallExpression expCall:
+                    return expCall.Method;
+                default:
+                    throw new ArgumentException("'" + exp + "' does not represent a member access.", nameof(exp));
             }
-            var expression2 = exp as MethodCallExpression;
-            if (expression2 == null)
-            {
-                throw new ArgumentException("'" + exp + "' does not represent a member access.", "exp");
-            }
-            return expression2.Method;
         }
 
         public static string NameOf<T>(Expression<Func<T>> exp)
         {
             if (exp == null)
             {
-                throw new ArgumentNullException(NameOf(() => exp));
+                throw new ArgumentNullException(nameof(exp));
             }
             return MemberOf(exp.Body).Name;
         }
@@ -52,7 +50,7 @@ namespace VariableIrony
         {
             if (exp == null)
             {
-                throw new ArgumentNullException(NameOf(() => exp));
+                throw new ArgumentNullException(nameof(exp));
             }
             return MemberOf(exp.Body).Name;
         }

@@ -21,8 +21,8 @@ namespace VariableIrony
 
         public static int IndexOf<T>(this IList<T> source, T item, int startIndex, int count, IEqualityComparer<T> comparer)
         {
-            int num = startIndex + count;
-            for (int i = startIndex; i < num; i++)
+            var num = startIndex + count;
+            for (var i = startIndex; i < num; i++)
             {
                 if (comparer.Equals(source[i], item))
                 {

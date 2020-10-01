@@ -11,36 +11,9 @@ namespace VariableIrony.Linq
         {
         }
 
-        public Type ElementType
-        {
-            get
-            {
-                return this.Source.ElementType;
-            }
-        }
-
-        public Expression Expression
-        {
-            get
-            {
-                return this.Source.Expression;
-            }
-        }
-
-        public IQueryProvider Provider
-        {
-            get
-            {
-                return this.Source.Provider;
-            }
-        }
-
-        public new IQueryable<T> Source
-        {
-            get
-            {
-                return (IQueryable<T>)base.Source;
-            }
-        }
+        public Type ElementType => this.Source.ElementType;
+        public Expression Expression => this.Source.Expression;
+        public IQueryProvider Provider => this.Source.Provider;
+        public new IQueryable<T> Source => (IQueryable<T>)base.Source;
     }
 }

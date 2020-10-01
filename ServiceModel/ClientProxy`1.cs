@@ -12,12 +12,7 @@ namespace VariableIrony.ServiceModel {
         public ClientProxy(Binding binding, EndpointAddress remoteAddress) : base(binding, remoteAddress) { }
         public ClientProxy(ServiceEndpoint endpoint) : base(endpoint) { }
 
-        public new TChannel Channel {
-            get { return base.Channel; }
-        }
-
-        public void Dispose() {
-            this.SafeDispose();
-        }
+        public new TChannel Channel => base.Channel;
+        public void Dispose() => this.SafeDispose();
     }
 }

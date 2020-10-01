@@ -9,20 +9,14 @@ namespace VariableIrony.Terminal
         private static readonly char[] AlphaChars = Enumerable.Range((int)'a', 26).Select(n => (char)n).ToArray();
         public static readonly AlphaLabelSequence Instance = new AlphaLabelSequence();
 
-        public override string Pattern
-        {
-            get { return "[a-z]{1,9}"; }
-        }
+        public override string Pattern => "[a-z]{1,9}";
 
         public override IEnumerable<string> GetLabels()
         {
-            foreach (var length in Enumerable.Range(1, 9))
-            {
-                foreach (var i in AlphaChars)
-                {
-                    yield return new string(i, length); // HACK: won't work correctly beyond 27
-                }
-            }
+            return
+                from length in Enumerable.Range(1, 9)
+                from i in AlphaChars
+                select new string(i, length);
         }
 
         public override int ParseLabel(string label)

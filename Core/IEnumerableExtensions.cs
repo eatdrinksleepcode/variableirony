@@ -19,7 +19,7 @@ namespace VariableIrony {
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
             return source.Concat(Enumerable.Repeat(value, 1));
         }
@@ -69,8 +69,7 @@ namespace VariableIrony {
         /// <param name="exceptionMessage">The exception message to throw if the sequence is empty.</param>
         public static TSource First<TSource>(this IEnumerable<TSource> source, string exceptionMessage)
         {
-            TSource local;
-            if (!source.TryFirst(out local))
+            if (!source.TryFirst(out var local))
             {
                 throw new InvalidOperationException(exceptionMessage);
             }
@@ -83,8 +82,7 @@ namespace VariableIrony {
         /// <param name="exceptionMessage">The exception message to throw if the sequence is empty.</param>
         public static TSource First<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, string exceptionMessage)
         {
-            TSource local;
-            if (!source.TryFirst(predicate, out local))
+            if (!source.TryFirst(predicate, out var local))
             {
                 throw new InvalidOperationException(exceptionMessage);
             }
@@ -97,8 +95,7 @@ namespace VariableIrony {
         /// <param name="args">The arguments to format.</param>
         public static TSource First<TSource>(this IEnumerable<TSource> source, string exceptionFormat, params object[] args)
         {
-            TSource local;
-            if (!source.TryFirst(out local))
+            if (!source.TryFirst(out var local))
             {
                 throw new InvalidOperationException(String.Format(exceptionFormat, args));
             }
@@ -112,8 +109,7 @@ namespace VariableIrony {
         /// <param name="args">The arguments to format.</param>
         public static TSource First<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, string exceptionFormat, params object[] args)
         {
-            TSource local;
-            if (!source.TryFirst(predicate, out local))
+            if (!source.TryFirst(predicate, out var local))
             {
                 throw new InvalidOperationException(String.Format(exceptionFormat, args));
             }
@@ -122,8 +118,7 @@ namespace VariableIrony {
 
         private static IEnumerable<T> GetSource<T>(IEnumerable<T> outer)
         {
-            var enumerable = outer as Enumerable<T>;
-            return enumerable != null ? enumerable.Source : outer;
+            return outer is Enumerable<T> enumerable ? enumerable.Source : outer;
         }
 
         public static IEnumerable<IGrouping<T, T>> Group<T>(this IEnumerable<T> source)
@@ -209,7 +204,7 @@ namespace VariableIrony {
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
             return Enumerable.Repeat(value, 1).Concat(source);
         }
@@ -234,22 +229,22 @@ namespace VariableIrony {
         {
             if (first == null)
             {
-                throw new ArgumentNullException("first");
+                throw new ArgumentNullException(nameof(first));
             }
             if (second == null)
             {
-                throw new ArgumentNullException("second");
+                throw new ArgumentNullException(nameof(second));
             }
             if (comparer == null)
             {
                 comparer = EqualityComparer<TSource>.Default;
             }
-            Dictionary<TSource, int> source = first
+            var source = first
                 .GroupBy(IdentityFunction<TSource>.Instance)
                 .ToDictionary(g => g.Key, g => g.Count(), comparer);
             foreach (var local in second)
             {
-                int num = source.TryGetValue(local, 0) - 1;
+                var num = source.TryGetValue(local, 0) - 1;
                 if (num < 0)
                 {
                     return false;
@@ -264,8 +259,7 @@ namespace VariableIrony {
         /// <param name="exceptionMessage">The exception message to throw if the sequence is empty or contains more than one element.</param>
         public static TSource Single<TSource>(this IEnumerable<TSource> source, string exceptionMessage)
         {
-            TSource local;
-            if (!source.TrySingle(out local))
+            if (!source.TrySingle(out var local))
             {
                 throw new InvalidOperationException(exceptionMessage);
             }
@@ -278,8 +272,7 @@ namespace VariableIrony {
         /// <param name="exceptionMessage">The exception message to throw if the sequence is empty or contains more than one element.</param>
         public static TSource Single<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, string exceptionMessage)
         {
-            TSource local;
-            if (!source.TrySingle(predicate, out local))
+            if (!source.TrySingle(predicate, out var local))
             {
                 throw new InvalidOperationException(exceptionMessage);
             }
@@ -292,8 +285,7 @@ namespace VariableIrony {
         /// <param name="args">The arguments to format.</param>
         public static TSource Single<TSource>(this IEnumerable<TSource> source, string exceptionFormat, params object[] args)
         {
-            TSource local;
-            if (!source.TrySingle(out local))
+            if (!source.TrySingle(out var local))
             {
                 throw new InvalidOperationException(String.Format(exceptionFormat, args));
             }
@@ -307,8 +299,7 @@ namespace VariableIrony {
         /// <param name="args">The arguments to format.</param>
         public static TSource Single<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, string exceptionFormat, params object[] args)
         {
-            TSource local;
-            if (!source.TrySingle(predicate, out local))
+            if (!source.TrySingle(predicate, out var local))
             {
                 throw new InvalidOperationException(String.Format(exceptionFormat, args));
             }
@@ -496,11 +487,11 @@ namespace VariableIrony {
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
             if (elementSelector == null)
             {
-                throw new ArgumentNullException("elementSelector");
+                throw new ArgumentNullException(nameof(elementSelector));
             }
             var set = new HashSet<TElement>(comparer);
             foreach (var local in source)
@@ -518,10 +509,10 @@ namespace VariableIrony {
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
-            var list = source as IList<TSource>;
-            if (list != null)
+
+            if (source is IList<TSource> list)
             {
                 if (list.Count > 0)
                 {
@@ -537,7 +528,7 @@ namespace VariableIrony {
                     return true;
                 }
             }
-            result = default(TSource);
+            result = default;
             return false;
         }
 
@@ -550,11 +541,11 @@ namespace VariableIrony {
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw new ArgumentNullException("predicate");
+                throw new ArgumentNullException(nameof(predicate));
             }
             foreach(var local in source) 
             {
@@ -564,7 +555,7 @@ namespace VariableIrony {
                     return true;                    
                 }
             }
-            result = default(TSource);
+            result = default;
             return false;
         }
 
@@ -576,10 +567,10 @@ namespace VariableIrony {
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
-            var list = source as IList<TSource>;
-            if (list != null)
+
+            if (source is IList<TSource> list)
             {
                 if (list.Count == 1)
                 {
@@ -602,7 +593,7 @@ namespace VariableIrony {
                     }
                 }
             }
-            result = default(TSource);
+            result = default;
             return false;
         }
 
@@ -615,19 +606,19 @@ namespace VariableIrony {
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw new ArgumentNullException("predicate");
+                throw new ArgumentNullException(nameof(predicate));
             }
-            result = default(TSource);
-            bool flag = false;
+            result = default;
+            var flag = false;
             foreach(var local in source.Where(predicate)) 
             {
                 if (flag)
                 {
-                    result = default(TSource);
+                    result = default;
                     return false;
                 }
                 result = local;
@@ -655,15 +646,15 @@ namespace VariableIrony {
         {
             if (first == null)
             {
-                throw new ArgumentNullException("first");
+                throw new ArgumentNullException(nameof(first));
             }
             if (second == null)
             {
-                throw new ArgumentNullException("second");
+                throw new ArgumentNullException(nameof(second));
             }
             if (func == null)
             {
-                throw new ArgumentNullException("func");
+                throw new ArgumentNullException(nameof(func));
             }
             return first.ZipInternal(second, func);
         }
@@ -681,10 +672,10 @@ namespace VariableIrony {
         public static IEnumerable<IEnumerable<T>> Page<T>(this IEnumerable<T> source, int pageSize)
         {
 			if (null == source) {
-				throw new ArgumentNullException("source");
+				throw new ArgumentNullException(nameof(source));
 			}
 			if (0 >= pageSize) {
-				throw new ArgumentOutOfRangeException("pageSize", "'pageSize' must be greater than 0");
+				throw new ArgumentOutOfRangeException(nameof(pageSize), "'pageSize' must be greater than 0");
 			}
 			return PageImpl(source, pageSize);
 		}

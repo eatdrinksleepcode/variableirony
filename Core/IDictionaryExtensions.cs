@@ -21,16 +21,15 @@ public static class IDictionaryExtensions
     /// </exception>
     public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TKey, TValue> valueFactory)
     {
-        TValue local;
         if (source == null)
         {
-            throw new ArgumentNullException("source");
+            throw new ArgumentNullException(nameof(source));
         }
-        if (!source.TryGetValue(key, out local))
+        if (!source.TryGetValue(key, out var local))
         {
             if (valueFactory == null)
             {
-                throw new ArgumentNullException("valueFactory");
+                throw new ArgumentNullException(nameof(valueFactory));
             }
             local = valueFactory(key);
             source.Add(key, local);
@@ -55,10 +54,10 @@ public static class IDictionaryExtensions
     {
         if (source == null)
         {
-            throw new ArgumentNullException("source");
+            throw new ArgumentNullException(nameof(source));
         }
-        TValue local;
-        if (!source.TryGetValue(key, out local))
+
+        if (!source.TryGetValue(key, out var local))
         {
             local = value;
             source.Add(key, local);
@@ -79,7 +78,7 @@ public static class IDictionaryExtensions
     /// </exception>
     public static TValue TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key)
     {
-        return source.TryGetValue(key, default(TValue));
+        return source.TryGetValue(key, default);
     }
 
     /// <summary>
@@ -98,14 +97,10 @@ public static class IDictionaryExtensions
     {
         if (source == null)
         {
-            throw new ArgumentNullException(Meta.NameOf(() => source));
+            throw new ArgumentNullException(nameof( source));
         }
-        TValue local;
-        if (source.TryGetValue(key, out local))
-        {
-            return local;
-        }
-        return defaultValue;
+
+        return source.TryGetValue(key, out var local) ? local : defaultValue;
     }
 
     /// <summary>
@@ -124,14 +119,10 @@ public static class IDictionaryExtensions
     {
         if (source == null)
         {
-            throw new ArgumentNullException(Meta.NameOf(() => source));
+            throw new ArgumentNullException(nameof(source));
         }
-        TValue local;
-        if (source.TryGetValue(key, out local))
-        {
-            return local;
-        }
-        return defaultValue;
+
+        return source.TryGetValue(key, out var local) ? local : defaultValue;
     }
 
     /// <summary>
@@ -150,14 +141,10 @@ public static class IDictionaryExtensions
     {
         if (source == null)
         {
-            throw new ArgumentNullException(Meta.NameOf(() => source));
+            throw new ArgumentNullException(nameof(source));
         }
-        TValue local;
-        if (source.TryGetValue(key, out local))
-        {
-            return local;
-        }
-        return defaultValue;
+
+        return source.TryGetValue(key, out var local) ? local : defaultValue;
     }
 }
 }
