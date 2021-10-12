@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
 
 namespace VariableIrony.ServiceModel {
     public class DuplexClientProxy<TChannel> : DuplexClientBase<TChannel>, IDisposable where TChannel : class {
