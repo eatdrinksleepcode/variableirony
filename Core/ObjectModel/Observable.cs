@@ -45,7 +45,7 @@ namespace VariableIrony.ObjectModel
         {
             if (!string.IsNullOrEmpty(propertyName) && (TypeDescriptor.GetProperties(this)[propertyName] == null))
             {
-                throw new ArgumentException("Invalid property name: " + propertyName, nameof(propertyName));
+                throw new ArgumentException($"Invalid property name: {propertyName}", nameof(propertyName));
             }
         }
     }

@@ -34,7 +34,7 @@ namespace VariableIrony.Terminal {
         public MenuItem Choose()
         {
             var sequences = Labels.Take(GetDepth(this)).ToList();
-            var pattern = new Regex("^" + sequences.Select(s => "(" + s.Pattern + ")").Aggregate((x, y) => x + y) + "$", RegexOptions.IgnoreCase);
+            var pattern = new Regex($"^{sequences.Select(s => $"({s.Pattern})").Aggregate((x, y) => x + y)}$", RegexOptions.IgnoreCase);
             MenuItem result;
             do
             {

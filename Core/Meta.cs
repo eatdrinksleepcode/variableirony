@@ -33,7 +33,7 @@ namespace VariableIrony
                 case MethodCallExpression expCall:
                     return expCall.Method;
                 default:
-                    throw new ArgumentException("'" + exp + "' does not represent a member access.", nameof(exp));
+                    throw new ArgumentException($"'{exp}' does not represent a member access.", nameof(exp));
             }
         }
 
